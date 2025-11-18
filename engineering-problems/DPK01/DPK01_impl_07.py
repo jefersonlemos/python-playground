@@ -1,30 +1,28 @@
-# para as proximas
-
-# manipular var word in place
-# usar map
-# recursao, uma funcao chamando a ela mesma 
-# algo assim
-
 word = "hello"
 word_len = len(word) - 1
-position = 0
 
 
-
-def get_letter(arg_word, arg_position):
+def get_letter(word):
+    print("arg-word =", word)
+    # print("position", position)
         
-    if arg_position <= word_len:
-        reverted_position = word_len - arg_position
-        
-        
-        arg_position += 1
+    if position <= word_len:
+        reverted_position = word_len - position
 
-        #Recursion
-        get_letter(arg_word, arg_position)
+        word += word[reverted_position]
 
+        position += 1
+
+    #Recursion
+    get_letter(word)
+    # return arg_word
+
+    print("arg-pos2 =", position)
+    print("arg-word2 =", word)
 
 
 #Starts in the position 0
-coiso = get_letter(word, position)
-print(coiso)
+
+
+print(get_letter(word))
 
