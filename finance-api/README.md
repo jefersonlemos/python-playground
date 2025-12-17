@@ -30,3 +30,13 @@ It will output a csv file with the following data:
 `Payment_date, value,payment_form, where`
 
 Up to this moment, it will come with a default profile.
+
+# How to run
+
+## Development
+```
+python3 -m venv .venv && \
+source .venv/bin/activate && \
+pip install -r requirements.txt && \
+uvicorn finance_api.main:app --reload --app-dir src
+```
