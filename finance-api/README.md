@@ -7,7 +7,7 @@ This output can be used afterwards to import bank data to other systems, like pe
 
 ## Capabilities
 
-### v0.1
+### v0.1.0
 
 * :construction_worker: Input formats: csv or ofx or both, yet to decide
 * :construction_worker: Generic input - the api will have common known fields in order to parse them, for example:

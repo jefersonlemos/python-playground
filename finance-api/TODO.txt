@@ -1,0 +1,17 @@
+# API
+v0.1.0
+- Create the initial contract or swagger endpoint so for the next endpoints I'll just update them
+- Create the import endpoint and update the contract. This endpoint will receive the ofx file and call the transform class.
+    Something like: 
+    ```
+    POST /v1/transactions/import
+    - Content-Type: multipart/form-data
+    - file: .ofx
+    ```
+
+- Create the transform class
+    this class will receive the ofx file read it and output the csv with the desired columns
+
+
+
+
