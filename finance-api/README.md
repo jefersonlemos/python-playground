@@ -34,9 +34,33 @@ Up to this moment, it will come with a default profile.
 # How to run
 
 ## Development
+### Installing the dependencies
 ```
 python3 -m venv .venv && \
 source .venv/bin/activate && \
-pip install -r requirements.txt && \
+pip install -r requirements.txt
+```
+
+### Starting the environment locally
+```
+source .venv/bin/activate && \
 uvicorn finance_api.main:app --reload --app-dir src
 ```
+
+## Production
+
+# Endpoints
+
+## 1. API Docs
+
+### Swagger UI
+http://127.0.0.1:8000/docs
+### API doc via Redoc
+http://127.0.0.1:8000/redoc
+### Get the OpenAPI spec
+http://127.0.0.1:8000/openapi.json
+
+## 2. File Operations
+
+### Import files
+http://127.0.0.1:8000/v1/file/import
