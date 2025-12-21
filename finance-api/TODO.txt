@@ -1,7 +1,8 @@
 # API
 v0.1.0
-[x] Create the initial contract or swagger endpoint so for the next endpoints I'll just update them
-    [x] Add the upload capability
+[] Upload Capability
+    [x] Create the endpoint, it should be shown on swagger UI
+    [x] Add the upload capability with basic extension validation (csv, ofx)
     [] Add the validation capability
         [] In FastAPI/ASGI, enforce max upload size
             Read only the first few KB, never the whole file.
@@ -15,13 +16,8 @@ v0.1.0
                         Unsafe XML parsers
                         eval-like behavior
                         Full file reads
-- Create the import endpoint and update the contract. This endpoint will receive the ofx file and call the transform class.
-    Something like: 
-    ```
-    POST /v1/transactions/import
-    - Content-Type: multipart/form-data
-    - file: .ofx
-    ```
+    FIX
+        [] OpenSwagger UI is showing file and import as two different endpoints
 
 - Create the transform class
     this class will receive the ofx file read it and output the csv with the desired columns

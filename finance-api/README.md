@@ -64,3 +64,7 @@ http://127.0.0.1:8000/openapi.json
 
 ### Import files
 http://127.0.0.1:8000/v1/file/import
+
+```
+curl -X POST -F "file=@testing.csv;type=multipart/form-data" http://localhost:8000/v1/file/import
+```
