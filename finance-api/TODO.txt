@@ -1,6 +1,20 @@
 # API
 v0.1.0
 [x] Create the initial contract or swagger endpoint so for the next endpoints I'll just update them
+    [x] Add the upload capability
+    [] Add the validation capability
+        [] In FastAPI/ASGI, enforce max upload size
+            Read only the first few KB, never the whole file.
+                Reject if:  
+                    Binary content detected
+                    Null bytes present
+                    Disable external entities (XML)
+                        Use streaming parsers
+                        Set depth / size limits
+                    Never use:
+                        Unsafe XML parsers
+                        eval-like behavior
+                        Full file reads
 - Create the import endpoint and update the contract. This endpoint will receive the ofx file and call the transform class.
     Something like: 
     ```
@@ -11,6 +25,12 @@ v0.1.0
 
 - Create the transform class
     this class will receive the ofx file read it and output the csv with the desired columns
+    CSV output sanitization
+    Before exporting CSV:
+        Prefix dangerous cells with '
+        Escape formulas starting with:
+            =,+,-,@
+
 
 
 
