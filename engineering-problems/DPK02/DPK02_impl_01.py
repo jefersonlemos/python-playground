@@ -1,6 +1,7 @@
 def revert_list(list):
     list_size = len(list)
     i = 0
+    #Creates a list with `list_size` slots so I can add values to [i] when looping
     reverted_list = [None] * list_size
     
     while i < list_size:
