@@ -2,8 +2,10 @@
 ## v0.1.0
 ### Feature
 - [ ] **Upload Capability**
-  - [x] Create the endpoint, it should be shown on swagger UI
-  - [x] Add the upload capability with basic extension validation (csv, ofx)
+  
+  [x] Create the endpoint, it should be shown on swagger UI
+
+  [x] Add the upload capability with basic extension validation (csv, ofx)
   - [ ] Add the validation capability
     - [ ] In FastAPI/ASGI, enforce max upload size
     - [x] Read only the first few KB, never the whole file.
