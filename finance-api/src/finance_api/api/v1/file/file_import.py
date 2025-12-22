@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from finance_api.utils.logging import LoggingOperations as logging
-from fastapi import APIRouter, UploadFile, File
+from finance_api.domain.verification.file_verification import verify_uploaded_file
+from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 
 router = APIRouter(
@@ -22,19 +23,26 @@ class ImportResponse(BaseModel):
 
 def import_file(file: UploadFile = File(...)) -> ImportResponse:
     if not file.filename:
+        logging("error", "File upload without filename")
         raise HTTPException(status_code=400, detail="File name is missing")
 
-    filename = file.filename.lower()
+    try:
+        verify_uploaded_file(file)
+    except ValueError as exc:
+        logging("warning", f"File verification failed: {exc}")
+        raise HTTPException(status_code=422, detail=str(exc))
+    except Exception as exc:
+        logging("error", f"Unexpected verification error: {exc}")
+        raise HTTPException(status_code=500, detail="Internal verification error")
 
-    if not (filename.endswith(".ofx") or filename.endswith(".csv")):
-        raise HTTPException(
-            status_code=415,
-            detail="Unsupported file type. Only .ofx and .csv are allowed",
-        )
+
+    logging(
+        "info",
+        f"File verified successfully: {file.filename} ({file.content_type})",
+    )
 
     return ImportResponse(
         filename=file.filename,
         content_type=file.content_type,
         status="received",
     )
-

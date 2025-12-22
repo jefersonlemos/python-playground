@@ -5,17 +5,12 @@ v0.1.0
     [x] Add the upload capability with basic extension validation (csv, ofx)
     [] Add the validation capability
         [] In FastAPI/ASGI, enforce max upload size
-            Read only the first few KB, never the whole file.
-                Reject if:  
-                    Binary content detected
-                    Null bytes present
-                    Disable external entities (XML)
-                        Use streaming parsers
-                        Set depth / size limits
-                    Never use:
-                        Unsafe XML parsers
-                        eval-like behavior
-                        Full file reads
+        [x] Read only the first few KB, never the whole file.
+            Reject if:  
+                [x] Binary content detected
+                [x] Null bytes present
+                [x] UTF-8 verification failed
+                [ ] Set depth / size limits
     FIX
         [] OpenSwagger UI is showing file and import as two different endpoints
 
