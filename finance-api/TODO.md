@@ -1,7 +1,7 @@
-# API
-v0.1.0
-[] Upload Capability
-    [x] Create the endpoint, it should be shown on swagger UI
+# Finance API TODO
+## v0.1.0
+- [ ] Upload Capability
+  - [x] Create the endpoint, it should be shown on swagger UI
     [x] Add the upload capability with basic extension validation (csv, ofx)
     [] Add the validation capability
         [] In FastAPI/ASGI, enforce max upload size
