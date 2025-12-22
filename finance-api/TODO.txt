@@ -11,6 +11,8 @@ v0.1.0
                 [x] Null bytes present
                 [x] UTF-8 verification failed
                 [ ] Set depth / size limits
+    # TESTS
+        [] Add unit tests for file upload
     FIX
         [] OpenSwagger UI is showing file and import as two different endpoints
 
