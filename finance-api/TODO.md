@@ -15,9 +15,9 @@
         - [ ] Set depth / size limits
     
     ### Tests
-        - [] Add unit tests for file upload
+    - [] Add unit tests for file upload
     ### Fix
-        - [] OpenSwagger UI is showing file and import as two different endpoints
+    - [] OpenSwagger UI is showing file and import as two different endpoints
 
 - [ ] **Create the file transformer class**
     - This class will receive the verified ofx file, read it and output the csv with the desired columns
