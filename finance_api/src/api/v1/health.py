@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-
 from fastapi import APIRouter
 from pydantic import BaseModel
 
@@ -16,13 +15,13 @@ class HealthResponse(BaseModel):
     uptime_seconds: float
     started_at: datetime
 
-
 @router.get(
     "",
     response_model=HealthResponse,
     summary="Health check",
     description="Returns service health status and uptime.",
 )
+
 def health_check() -> HealthResponse:
     now = datetime.now(tz=timezone.utc)
     uptime = (now - START_TIME).total_seconds()

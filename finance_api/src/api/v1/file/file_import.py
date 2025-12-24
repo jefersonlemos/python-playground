@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
-from finance_api.utils.logging import LoggingOperations as logging
-from finance_api.domain.verification.file_verification import verify_uploaded_file
+from utils.logging import LoggingOperations as logging
+from domain.verification.file_verification import verify_uploaded_file
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 

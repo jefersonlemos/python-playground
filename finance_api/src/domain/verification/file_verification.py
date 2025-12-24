@@ -1,9 +1,6 @@
-from finance_api.utils.logging import LoggingOperations as logging
 from fastapi import UploadFile
 
-
 def verify_uploaded_file(file: UploadFile, sniff_bytes: int = 4096) -> None:
-
     """
     Verifies the uploaded file using cheap, defensive checks.
     - Reads only the first N bytes
@@ -12,7 +9,6 @@ def verify_uploaded_file(file: UploadFile, sniff_bytes: int = 4096) -> None:
     Raises ValueError on failure.
     """
 
-    # Read a small chunk only
     head = file.file.read(sniff_bytes)
     file.file.seek(0)
 
@@ -32,12 +28,10 @@ def verify_uploaded_file(file: UploadFile, sniff_bytes: int = 4096) -> None:
     lower_name = file.filename.lower()
 
     if lower_name.endswith(".ofx"):
-        # Very cheap OFX signature check
         if "<ofx" not in text.lower():
             raise ValueError("Invalid OFX header")
 
     elif lower_name.endswith(".csv"):
-        # Minimal CSV sanity check
         if "," not in text and ";" not in text:
             raise ValueError("Invalid CSV structure")
 
