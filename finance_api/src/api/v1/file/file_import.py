@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from utils.logging import LoggingOperations as logging
 from domain.verification.file_verification import enforce_size, verify_uploaded_file
+from domain.transformation.file_transformation import FileTransformer
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 
@@ -13,6 +14,7 @@ class ImportResponse(BaseModel):
     filename: str
     content_type: str | None
     status: str
+    csv_content: str
 
 @router.post(
     "",
@@ -42,8 +44,18 @@ async def import_file(file: UploadFile = File(...)) -> ImportResponse:
         f"File verified successfully: {file.filename} ({file.content_type})",
     )
 
+    # Transform the file
+    transformer = FileTransformer()
+    csv_content = transformer.transform(file)
+
+    logging(
+        "info",
+        f"File transformed successfully",
+    )
+
     return ImportResponse(
         filename=file.filename,
         content_type=file.content_type,
-        status="received",
+        status="transformed",
+        csv_content=csv_content,
     )

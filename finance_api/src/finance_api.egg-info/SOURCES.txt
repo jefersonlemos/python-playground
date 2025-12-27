@@ -7,6 +7,8 @@ src/api/v1/health.py
 src/api/v1/file/__init__.py
 src/api/v1/file/file_import.py
 src/domain/__init__.py
+src/domain/transformation/__init__.py
+src/domain/transformation/file_transformation.py
 src/domain/verification/__init__.py
 src/domain/verification/file_verification.py
 src/finance_api.egg-info/PKG-INFO
