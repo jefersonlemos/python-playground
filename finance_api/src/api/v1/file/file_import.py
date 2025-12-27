@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from utils.logging import LoggingOperations as logging
-from domain.verification.file_verification import verify_uploaded_file
+from domain.verification.file_verification import enforce_size, verify_uploaded_file
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from pydantic import BaseModel
 
@@ -21,12 +21,13 @@ class ImportResponse(BaseModel):
     description="Receive a transaction file (OFX or CSV) and validate basic properties",
 )
 
-def import_file(file: UploadFile = File(...)) -> ImportResponse:
+async def import_file(file: UploadFile = File(...)) -> ImportResponse:
     if not file.filename:
         logging("error", "File upload without filename")
         raise HTTPException(status_code=400, detail="File name is missing")
 
     try:
+        await enforce_size(file)
         verify_uploaded_file(file)
     except ValueError as exc:
         logging("warning", f"File verification failed: {exc}")

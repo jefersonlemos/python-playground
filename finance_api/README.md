@@ -36,15 +36,15 @@ Up to this moment, it will come with a default profile.
 ## Development
 ### Installing the dependencies
 ```
-python3 -m venv .venv && \
+python -m venv .venv && \
 source .venv/bin/activate && \
-pip install -r requirements.txt
+python -m pip install -e .
 ```
 
 ### Starting the environment locally
 ```
 source .venv/bin/activate && \
-uvicorn finance_api.main:app --reload --app-dir src
+uvicorn main:app --reload --app-dir src
 ```
 
 ## Production

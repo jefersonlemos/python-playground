@@ -1,7 +1,7 @@
 import io
 import pytest
 from fastapi import UploadFile
-from domain.verification.file_verification import verify_uploaded_file
+from domain.verification.file_verification import verify_uploaded_file, enforce_size, MAX_SIZE
 
 def make_upload_file(filename: str, content: bytes) -> UploadFile:
     return UploadFile(
@@ -12,6 +12,7 @@ def make_upload_file(filename: str, content: bytes) -> UploadFile:
 # -------------------------
 # VALID FILES
 # -------------------------
+
 
 def test_valid_ofx_file():
     file = make_upload_file(
@@ -100,3 +101,27 @@ def test_unsupported_extension():
 
     with pytest.raises(ValueError, match="Unsupported file extension"):
         verify_uploaded_file(file)
+
+
+# -------------------------
+# ENFORCE_SIZE TESTS
+# -------------------------
+
+@pytest.mark.asyncio
+async def test_enforce_size_small_file():
+    file = make_upload_file("small.txt", b"x" * 100)
+    # Should not raise
+    await enforce_size(file)
+
+
+@pytest.mark.asyncio
+async def test_enforce_size_exact_size():
+    file = make_upload_file("exact.txt", b"x" * MAX_SIZE)
+    await enforce_size(file)
+
+
+@pytest.mark.asyncio
+async def test_enforce_size_large_file():
+    file = make_upload_file("large.txt", b"x" * (MAX_SIZE + 1))
+    with pytest.raises(ValueError, match="File too large"):
+        await enforce_size(file)

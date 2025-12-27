@@ -4,9 +4,12 @@
 - [ ] **Upload Capability**
   - [x] Create the endpoint, it should be shown on swagger UI
   - [x] Add the upload capability with basic extension validation (csv, ofx)
-  - [ ] Add the validation capability
-  - [ ] Tests - Validation capability
-    - [ ] In FastAPI/ASGI, enforce max upload size
+  - [x] Add the File validation capability - minimum security and consistency
+  - [x] Tests - File validation capability
+    - [x] In FastAPI/ASGI, enforce max upload size
+    - [x] Tests - Enforce max upload size
+    - [ ] In NGINX, enforce max upload size
+    - [ ] Tests - Probably the existing tests will be sufficient
     - [x] Read only the first few KB, never the whole file.
 
         Reject if:  

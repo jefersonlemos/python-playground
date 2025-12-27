@@ -1,4 +1,16 @@
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
+
+MAX_SIZE = 2 * 1024 * 1024  #2 MB
+
+async def enforce_size(file: UploadFile):
+    size = 0
+    chunk_size = 1024 * 1024
+
+    while chunk := await file.read(chunk_size):
+        size += len(chunk)
+        if size > MAX_SIZE:
+            raise ValueError("File too large")
+    await file.seek(0)
 
 def verify_uploaded_file(file: UploadFile, sniff_bytes: int = 4096) -> None:
     """
