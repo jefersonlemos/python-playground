@@ -11,4 +11,4 @@ word.reverse()
 for letter in word:
     drow += letter
 
-print(drow)
+print("a palavra invertida", drow)
