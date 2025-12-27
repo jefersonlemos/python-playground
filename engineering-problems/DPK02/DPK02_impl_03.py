@@ -1,15 +1,24 @@
-list = [5,6,7,8,9,10,11,12,13,14,15]
+def revert_list(list,l,r):
+    if r < 0:
+        print("coco")
+        return reverted_list
+    else:
+        reverted_list[l] = 1
+        l += 1
+        r -= 1
+        return l,r
+
+def thing(list,l,r):
+    revert_list(list,l,r)
+    l += 1
+    r -= 1
+    return thing(list,l,r)
+
+
+list = [5,6,7,8]
 list_size = len(list)
-
-left_list_item = 0
-right_list_item = list_size
 reverted_list = [None] * list_size
+l = 0
+r = list_size - 1
 
-def revert_list(list):
-    last_list_item = list_size - 1
-    left_list_item += 1
-    right_list_item -= 1
-    reverted_list[left_list_item] = list[right_list_item]
-    return revert_list(list)
-    
-print(revert_list(list))
+print(thing(list,l,r))
