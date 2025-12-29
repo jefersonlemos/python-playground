@@ -23,7 +23,7 @@
     ### Fix
     - [ ] OpenSwagger UI is showing file and import as two different endpoints
 
-- [ ] **Transforming capability**
+- [ ] **Transforming capability** -> [Details](transforming.md)
     - [ ] Create the file transformer class
         - This class will receive the verified ofx file, read it and output the csv with the desired columns
         CSV output sanitization
