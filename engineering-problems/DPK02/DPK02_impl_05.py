@@ -3,7 +3,8 @@ def revert_list(list):
     r = len(list) - 1
 
     while l < r:
-        list[l] = list[r]
+        list[l], list[r] = list[r], list[l]
+
         l += 1
         r -= 1
 
