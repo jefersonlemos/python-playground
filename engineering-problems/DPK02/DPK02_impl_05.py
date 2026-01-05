@@ -1,17 +1,15 @@
 def revert_list(list):
-    s = len(list) - 1
-    r = s 
     l = 0
-    for item in list:
+    r = len(list) - 1
+
+    while l < r:
         list[l] = list[r]
+
         l += 1
         r -= 1
-    if l == s:
-        return list
+
+    return list
 
 
-
-list = [1,2,3]
+list = [1, 2, 3, 4]
 print(revert_list(list))
-
-
