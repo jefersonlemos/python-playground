@@ -4,12 +4,10 @@ def revert_list(list):
 
     while l < r:
         list[l] = list[r]
-
         l += 1
         r -= 1
 
     return list
-
 
 list = [1, 2, 3, 4]
 print(revert_list(list))
