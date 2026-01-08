@@ -10,16 +10,15 @@ def revert_list(list):
     n = 1
 
     for item in list:
-        while n <= r:
+        print(item, list)
+        
+        for item in range(l,r):
             list[c], list[n] = list[n], list[c]
-
-            print(list)
             c += 1
             n += 1
-
         c = 0
         n = 1
-        l += 1
+        # l += 1
         r -= 1
     return list
 
