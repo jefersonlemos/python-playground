@@ -11,74 +11,78 @@ class FileTransformer:
         self.profile = profile
 
     def transform(self, file: UploadFile) -> str:
-        # Determine file type
         filename = file.filename.lower()
-        if filename.endswith('.ofx'):
+
+        if filename.endswith(".ofx"):
             return self._transform_ofx(file)
-        elif filename.endswith('.csv'):
+        elif filename.endswith(".csv"):
             return self._transform_csv(file)
-        else:
-            raise HTTPException(status_code=400, detail="Unsupported file type")
+
+        raise HTTPException(status_code=400, detail="Unsupported file type")
 
     def _transform_ofx(self, file: UploadFile) -> str:
-        # Read file content
         content = file.file.read()
-        file.file.seek(0)  # Reset file pointer
+        file.file.seek(0)
+
         ofx = ofxparse.OfxParser.parse(io.BytesIO(content))
 
-        # Extract transactions
         transactions = []
         for account in ofx.accounts:
             for transaction in account.statement.transactions:
                 transactions.append({
-                    'date': transaction.date.strftime('%Y-%m-%d'),
-                    'amount': str(transaction.amount),
-                    'memo': transaction.memo or '',
-                    'payee': transaction.payee or ''
+                    "date": transaction.date.strftime("%Y-%m-%d"),
+                    "amount": str(transaction.amount),
+                    "memo": transaction.memo or "",
+                    "payee": transaction.payee or "",
                 })
 
         return self._to_csv(transactions)
 
     def _transform_csv(self, file: UploadFile) -> str:
-        # Assume CSV has headers: date,amount,memo,payee or similar
-        content = file.file.read().decode('utf-8')
+        content = file.file.read().decode("utf-8")
         file.file.seek(0)
+
         reader = csv.DictReader(io.StringIO(content))
         transactions = []
+
         for row in reader:
             transactions.append({
-                'date': row.get('date', ''),
-                'amount': row.get('amount', ''),
-                'memo': row.get('memo', ''),
-                'payee': row.get('payee', '')
+                "date": row.get("date", ""),
+                "amount": row.get("amount", ""),
+                "memo": row.get("memo", ""),
+                "payee": row.get("payee", ""),
             })
 
         return self._to_csv(transactions)
 
     def _to_csv(self, transactions: List[Dict[str, Any]]) -> str:
         if not transactions:
-            return ''
+            return ""
 
-        # Map using profile
-        output_fields = list(self.profile.values())
+        output_fields = [cfg["column"] for cfg in self.profile.values()]
         output = io.StringIO()
+
         writer = csv.DictWriter(output, fieldnames=output_fields)
         writer.writeheader()
 
         for tx in transactions:
             row = {}
-            for input_field, output_field in self.profile.items():
-                value = tx.get(input_field, '')
-                # Sanitize
-                value = self._sanitize_csv_value(value)
-                row[output_field] = value
+
+            for input_field, cfg in self.profile.items():
+                value = tx.get(input_field)
+
+                if not value:
+                    value = cfg["default"]
+
+                value = self._sanitize_csv_value(str(value))
+                row[cfg["column"]] = value
+
             writer.writerow(row)
 
         return output.getvalue()
 
     def _sanitize_csv_value(self, value: str) -> str:
-        # Prefix dangerous cells with '
-        dangerous_starts = ['=', '+', '-', '@']
-        if any(value.startswith(start) for start in dangerous_starts):
-            value = "'" + value
+        dangerous_starts = ("=", "+", "-", "@")
+        if value.startswith(dangerous_starts):
+            return "'" + value
         return value
