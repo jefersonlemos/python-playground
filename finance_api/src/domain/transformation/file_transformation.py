@@ -2,18 +2,13 @@ import csv
 import io
 from typing import Dict, List, Any
 from fastapi import UploadFile, HTTPException
+from domain.transformation.profiles import *
 import ofxparse
 
 
 class FileTransformer:
-    def __init__(self, profile: Dict[str, str] = None):
-        # Default profile maps common fields
-        self.profile = profile or {
-            'date': 'Date',
-            'amount': 'Amount',
-            'memo': 'Description',
-            'payee': 'Payee'
-        }
+    def __init__(self, profile: dict = DEFAULT_PROFILE):
+        self.profile = profile
 
     def transform(self, file: UploadFile) -> str:
         # Determine file type

@@ -24,7 +24,7 @@
     - [ ] OpenSwagger UI is showing file and import as two different endpoints
 
 - [ ] **Transforming capability** -> [Details](transforming.md)
-    - [ ] Create the file transformer class
+    - [ ] Create the file transformer class to output a csv with the default [columns](transforming.md) of the MyFinance app
         - This class will receive the verified ofx file, read it and output the csv with the desired columns
         CSV output sanitization
         Before exporting CSV:
