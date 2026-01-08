@@ -15,11 +15,11 @@ DEFAULT_PROFILE = {
     },
     "_categoria": {
         "column": "Categoria",
-        "default": "Variáveis/Outros"
+        "default": "Variáveis"
     },
     "_subcategoria": {
         "column": "Subcategoria",
-        "default": ""
+        "default": "Outros"
     },
     "_conta": {
         "column": "Conta",
