@@ -12,6 +12,9 @@ def revert_list(list):
         l += 1
         i += 1
     
+    l -= 1
+    i = 0        
+    
     while i < list_size:
         list[i] = temp_list[l]
         l -= 1
