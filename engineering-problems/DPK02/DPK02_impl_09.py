@@ -1,6 +1,6 @@
 def revert_list(list):
     '''
-    #TODO - Define the approach
+    impl_09: loop over a list using while, add the values to a temp list and then loop over the temp list starting from the end
     '''
 
     return list
