@@ -1,9 +1,9 @@
 def revert_list(list):
     '''
-    #TODO - Define the approach
+    #TODO - a recursion that gets the next number based on index and add it to the left
     '''
 
-    return list
+
 
 list = [1,2,3,4]
 print(revert_list(list))
