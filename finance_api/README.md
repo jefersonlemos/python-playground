@@ -63,9 +63,15 @@ http://127.0.0.1:8000/openapi.json
 
 ## 2. File Operations
 
-### Import files
+### Importing files
 http://127.0.0.1:8000/v1/file/import
 
 ```
-curl -X POST -F "file=@testing.csv;type=multipart/form-data" http://localhost:8000/v1/file/import
+curl -X POST \
+  -F "file=@Nubank_2026-01-13.ofx" \
+  -F "due_date=2026-02-10" \
+  -F "card_name=Banco Nacional" \
+  -F "account=Conta Principal" \
+  http://localhost:8000/v1/file/import | jq -r .csv_content > output.csv
+
 ```

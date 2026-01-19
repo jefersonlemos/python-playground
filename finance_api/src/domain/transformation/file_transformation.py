@@ -2,25 +2,33 @@ import csv
 import io
 from typing import Dict, List, Any
 from fastapi import UploadFile, HTTPException
-from domain.transformation.profiles import *
 import ofxparse
+
+from domain.transformation.profiles import DEFAULT_PROFILE
 
 
 class FileTransformer:
     def __init__(self, profile: dict = DEFAULT_PROFILE):
         self.profile = profile
 
-    def transform(self, file: UploadFile) -> str:
+    def transform(
+        self,
+        file: UploadFile,
+        manual_fields: Dict[str, Any] | None = None,
+    ) -> str:
         filename = file.filename.lower()
+        manual_fields = manual_fields or {}
 
         if filename.endswith(".ofx"):
-            return self._transform_ofx(file)
+            transactions = self._parse_ofx(file)
         elif filename.endswith(".csv"):
-            return self._transform_csv(file)
+            transactions = self._parse_csv(file)
+        else:
+            raise HTTPException(status_code=400, detail="Unsupported file type")
 
-        raise HTTPException(status_code=400, detail="Unsupported file type")
+        return self._to_csv(transactions, manual_fields)
 
-    def _transform_ofx(self, file: UploadFile) -> str:
+    def _parse_ofx(self, file: UploadFile) -> List[Dict[str, Any]]:
         content = file.file.read()
         file.file.seek(0)
 
@@ -33,29 +41,22 @@ class FileTransformer:
                     "date": transaction.date.strftime("%Y-%m-%d"),
                     "amount": str(transaction.amount),
                     "memo": transaction.memo or "",
-                    "payee": transaction.payee or "",
                 })
 
-        return self._to_csv(transactions)
+        return transactions
 
-    def _transform_csv(self, file: UploadFile) -> str:
+    def _parse_csv(self, file: UploadFile) -> List[Dict[str, Any]]:
         content = file.file.read().decode("utf-8")
         file.file.seek(0)
 
         reader = csv.DictReader(io.StringIO(content))
-        transactions = []
+        return list(reader)
 
-        for row in reader:
-            transactions.append({
-                "date": row.get("date", ""),
-                "amount": row.get("amount", ""),
-                "memo": row.get("memo", ""),
-                "payee": row.get("payee", ""),
-            })
-
-        return self._to_csv(transactions)
-
-    def _to_csv(self, transactions: List[Dict[str, Any]]) -> str:
+    def _to_csv(
+        self,
+        transactions: List[Dict[str, Any]],
+        manual_fields: Dict[str, Any],
+    ) -> str:
         if not transactions:
             return ""
 
@@ -69,10 +70,11 @@ class FileTransformer:
             row = {}
 
             for input_field, cfg in self.profile.items():
-                value = tx.get(input_field)
-
-                if not value:
-                    value = cfg["default"]
+                value = (
+                    tx.get(input_field)
+                    or manual_fields.get(input_field)
+                    or cfg["default"]
+                )
 
                 value = self._sanitize_csv_value(str(value))
                 row[cfg["column"]] = value
@@ -82,7 +84,7 @@ class FileTransformer:
         return output.getvalue()
 
     def _sanitize_csv_value(self, value: str) -> str:
-        dangerous_starts = ("=", "+", "-", "@")
-        if value.startswith(dangerous_starts):
+        # Prevent CSV injection
+        if value.startswith(("=", "+", "-", "@")):
             return "'" + value
         return value

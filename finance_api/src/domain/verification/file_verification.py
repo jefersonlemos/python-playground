@@ -27,7 +27,7 @@ def verify_uploaded_file(file: UploadFile, sniff_bytes: int = 4096) -> None:
     if not head:
         raise ValueError("Empty file")
 
-    # Reject null bytes (strong binary indicator)
+    # Reject null bytes (binary check)
     if b"\x00" in head:
         raise ValueError("Binary content detected")
 
