@@ -15,7 +15,7 @@ DEFAULT_PROFILE = {
     },    
     "due_date": {
         "column": "Data de Vencimento", #Card due date
-        #TODO - Add it manually via API
+        #TODO - Add due date manually via API
         #IMPROVEMENT - Add the credit card to the system and then select it when generating the csv
         "default": ""
     },
@@ -28,11 +28,15 @@ DEFAULT_PROFILE = {
         "default": "Outros"
     },
     "_cartao": {
+        #TODO - Add card name via API
         "column": "Nome do Cartão",
-        "default": "CardName not defined"
+        #IMPROVEMENT - This will be then set on the credit card definition        
+        "default": "TBD"
     },    
     "_conta": {
+        #TODO - Add account name via api        
         "column": "Conta",
+        #IMPROVEMENT - This will be then set on the credit card definition        
         "default": "Account not defined"
     },
 
