@@ -2,16 +2,23 @@
 
 DEFAULT_PROFILE = {
     "memo": {
-        "column": "Description",
+        "column": "Descrição",
         "default": ""
     },
     "amount": {
-        "column": "Amount",
+        "column": "Valor",
         "default": ""
     },
-    "date": {
-        "column": "Data de Vencimento",
-        "default": "13/{current_month}/{current_year}"
+    "DTPOSTED": {
+        "column": "Data de Lançamento", #When the debit happened
+        #TODO - Current day, the day the csv is bein generated
+        "default": ""
+    },    
+    "due_date": {
+        "column": "Data de Vencimento", #Card due date
+        #TODO - Add it manually via API
+        #IMPROVEMENT - Add the credit card to the system and then select it when generating the csv
+        "default": ""
     },
     "_categoria": {
         "column": "Categoria",
@@ -21,14 +28,15 @@ DEFAULT_PROFILE = {
         "column": "Subcategoria",
         "default": "Outros"
     },
-    "_conta": {
-        "column": "Conta",
-        "default": "TBD"
-    },
     "_cartao": {
         "column": "Nome do Cartão",
-        "default": "TBD"
+        "default": "CardName not defined"
+    },    
+    "_conta": {
+        "column": "Conta",
+        "default": "Account not defined"
     },
+
     "_observacoes": {
         "column": "Observações",
         "default": "Compra feita em {date}"
