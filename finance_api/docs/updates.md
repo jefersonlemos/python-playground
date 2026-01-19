@@ -31,3 +31,6 @@ FAILED tests/domain/transformation/test_file_transformation.py::test_ofx_transfo
 ```
 - Ensure that all defined tasks are finished
 - Proceed to deployment to local cluster.
+    - Build
+    - Pipeline to deploy
+- When it's deployed and running, block main branch and start working with feature-branch
