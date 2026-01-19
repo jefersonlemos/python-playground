@@ -9,9 +9,8 @@ DEFAULT_PROFILE = {
         "column": "Valor",
         "default": ""
     },
-    "DTPOSTED": {
+    "date": {
         "column": "Data de Lançamento", #When the debit happened
-        #TODO - Current day, the day the csv is bein generated
         "default": ""
     },    
     "due_date": {
@@ -39,6 +38,7 @@ DEFAULT_PROFILE = {
 
     "_observacoes": {
         "column": "Observações",
+        #TODO - {date} is not working
         "default": "Compra feita em {date}"
     }
 }
