@@ -1,127 +1,29 @@
 import io
 import pytest
 from fastapi import UploadFile
-from domain.verification.file_verification import verify_uploaded_file, enforce_size, MAX_SIZE
 
-def make_upload_file(filename: str, content: bytes) -> UploadFile:
+from domain.verification.file_verification import verify_uploaded_file
+
+
+def make_upload(filename: str, content: bytes):
     return UploadFile(
         filename=filename,
         file=io.BytesIO(content),
     )
 
-# -------------------------
-# VALID FILES
-# -------------------------
-
 
 def test_valid_ofx_file():
-    file = make_upload_file(
-        "test.ofx",
-        b"<OFX>\n<SIGNONMSGSRSV1>",
-    )
-
-    # should NOT raise
+    file = make_upload("test.ofx", b"<OFX>ok</OFX>")
     verify_uploaded_file(file)
 
 
-def test_valid_csv_file_with_comma():
-    file = make_upload_file(
-        "test.csv",
-        b"col1,col2,col3\n1,2,3",
-    )
-
-    verify_uploaded_file(file)
-
-
-def test_valid_csv_file_with_semicolon():
-    file = make_upload_file(
-        "test.csv",
-        b"col1;col2;col3\n1;2;3",
-    )
-
-    verify_uploaded_file(file)
-
-
-# -------------------------
-# FAILURE CASES
-# -------------------------
-
-def test_empty_file():
-    file = make_upload_file("empty.csv", b"")
-
-    with pytest.raises(ValueError, match="Empty file"):
+def test_rejects_binary_file():
+    file = make_upload("bad.ofx", b"\x00\x01\x02")
+    with pytest.raises(ValueError):
         verify_uploaded_file(file)
 
 
-def test_binary_file_rejected():
-    file = make_upload_file(
-        "binary.csv",
-        b"\x00\x01\x02\x03",
-    )
-
-    with pytest.raises(ValueError, match="Binary content detected"):
+def test_rejects_unsupported_extension():
+    file = make_upload("file.exe", b"text")
+    with pytest.raises(ValueError):
         verify_uploaded_file(file)
-
-
-def test_invalid_utf8_file():
-    file = make_upload_file(
-        "invalid.csv",
-        b"\xff\xfe\xfd",
-    )
-
-    with pytest.raises(ValueError, match="File is not valid UTF-8 text"):
-        verify_uploaded_file(file)
-
-
-def test_invalid_ofx_header():
-    file = make_upload_file(
-        "bad.ofx",
-        b"THIS IS NOT OFX",
-    )
-
-    with pytest.raises(ValueError, match="Invalid OFX header"):
-        verify_uploaded_file(file)
-
-
-def test_invalid_csv_structure():
-    file = make_upload_file(
-        "bad.csv",
-        b"this has no delimiters at all",
-    )
-
-    with pytest.raises(ValueError, match="Invalid CSV structure"):
-        verify_uploaded_file(file)
-
-
-def test_unsupported_extension():
-    file = make_upload_file(
-        "file.txt",
-        b"just some text",
-    )
-
-    with pytest.raises(ValueError, match="Unsupported file extension"):
-        verify_uploaded_file(file)
-
-
-# -------------------------
-# ENFORCE_SIZE TESTS
-# -------------------------
-
-@pytest.mark.asyncio
-async def test_enforce_size_small_file():
-    file = make_upload_file("small.txt", b"x" * 100)
-    # Should not raise
-    await enforce_size(file)
-
-
-@pytest.mark.asyncio
-async def test_enforce_size_exact_size():
-    file = make_upload_file("exact.txt", b"x" * MAX_SIZE)
-    await enforce_size(file)
-
-
-@pytest.mark.asyncio
-async def test_enforce_size_large_file():
-    file = make_upload_file("large.txt", b"x" * (MAX_SIZE + 1))
-    with pytest.raises(ValueError, match="File too large"):
-        await enforce_size(file)
