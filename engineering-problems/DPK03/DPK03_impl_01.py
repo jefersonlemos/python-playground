@@ -1,5 +1,5 @@
 '''
-Approach: To be defined
+Approach: Receive the value to search and iterate over the map
 '''
 
 data_map = [
