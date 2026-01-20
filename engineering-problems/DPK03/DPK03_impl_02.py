@@ -8,16 +8,16 @@ data_map = [
     {"id": 3, "name": "Rustina Souza Python", "email": "rusthon@cafecomvenvanse.com"}
 ]
 
-def lookup(key):
+def lookup(search_key):
     i = 0 
     while i < len(data_map):
-        if data_map[i].get("id") == key:
+        if data_map[i].get("id") == search_key:
             return data_map[i].get("name")
         
-        if data_map[i].get("name") == key:
+        if data_map[i].get("name") == search_key:
             return data_map[i].get("email")
         
-        if data_map[i].get("email") == key:
+        if data_map[i].get("email") == search_key:
             return data_map[i].get("id")                
         i += 1
 
