@@ -9,12 +9,23 @@ data_map = [
 ]
 
 def lookup(key):
-    while i <= len(data_map):
-        # while k != data_map[i].values
-        print
+    i = 0 
+    while i < len(data_map):
+        if data_map[i].get("id") == key:
+            return data_map[i].get("name")
+        
+        if data_map[i].get("name") == key:
+            return data_map[i].get("email")
+        
+        if data_map[i].get("email") == key:
+            return data_map[i].get("id")                
+        i += 1
 
     return None
 
+#Returns name
 print(lookup(1))
+#Returns email 
 print(lookup("Javagner da Silva"))
+#Returns id
 print(lookup("rusthon@cafecomvenvanse.com"))
