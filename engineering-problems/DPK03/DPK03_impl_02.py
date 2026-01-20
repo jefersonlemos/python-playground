@@ -1,5 +1,5 @@
 '''
-Approach: To be defined
+Approach: Search the given key by iteratng over the map using a while loop, getting index and keys and comparing the values
 '''
 
 data_map = [
@@ -9,9 +9,10 @@ data_map = [
 ]
 
 def lookup(key):
+    while i <= len(data_map):
+        # while k != data_map[i].values
+        print
 
-
-    
     return None
 
 print(lookup(1))
