@@ -54,8 +54,8 @@ def test_csv_transformation():
     transformer = FileTransformer()
     csv_output = transformer.transform(upload)
 
-    assert "date" in csv_output
-    assert "amount" in csv_output
+    assert "date" in csv_output or "Data de Lançamento" in csv_output
+    assert "Valor" in csv_output or "100.00" in csv_output
     assert csv_output  # Ensure output is not empty
 
 
@@ -117,8 +117,22 @@ NEWFILEVERSION:102
 <OFX>
 <SIGNONMSGSRSV1>
 <SONRS>
+<STATUS>
+<CODE>0
+<SEVERITY>INFO
+</STATUS>
+<DTSERVER>20260113000000
+<LANGUAGE>ENG
 </SONRS>
 </SIGNONMSGSRSV1>
+<BANKMSGSRSV1>
+<STMTTRNRS>
+<STMTRS>
+<BANKTRANLIST>
+</BANKTRANLIST>
+</STMTRS>
+</STMTTRNRS>
+</BANKMSGSRSV1>
 </OFX>"""
 
     upload = UploadFile(

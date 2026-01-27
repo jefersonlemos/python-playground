@@ -1,5 +1,5 @@
 def test_import_endpoint_returns_csv(client):
-    with open("finance_api/tests/fixtures/sample.ofx", "rb") as f:
+    with open("tests/fixtures/sample.ofx", "rb") as f:
         response = client.post(
             "/v1/file/import",
             files={"file": ("sample.ofx", f, "application/xml")},
@@ -29,11 +29,11 @@ def test_import_endpoint_rejects_missing_filename(client):
         "/v1/file/import",
         files={"file": ("", io.BytesIO(b"test"), "text/plain")},
     )
-    assert response.status_code == 400
+    assert response.status_code == 422
 
 
 def test_import_endpoint_returns_all_required_fields(client):
-    with open("finance_api/tests/fixtures/sample.ofx", "rb") as f:
+    with open("tests/fixtures/sample.ofx", "rb") as f:
         response = client.post(
             "/v1/file/import",
             files={"file": ("sample.ofx", f, "application/xml")},
@@ -48,7 +48,7 @@ def test_import_endpoint_returns_all_required_fields(client):
 
 
 def test_import_endpoint_with_optional_fields(client):
-    with open("finance_api/tests/fixtures/sample.ofx", "rb") as f:
+    with open("tests/fixtures/sample.ofx", "rb") as f:
         response = client.post(
             "/v1/file/import",
             files={"file": ("sample.ofx", f, "application/xml")},

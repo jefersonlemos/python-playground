@@ -4,8 +4,11 @@
       <STMTRS>
         <BANKTRANLIST>
           <STMTTRN>
+            <TRNTYPE>DEBIT</TRNTYPE>
             <DTPOSTED>20260113000000</DTPOSTED>
             <TRNAMT>-50.00</TRNAMT>
+            <FITID>123456</FITID>
+            <NAME>Coffee Shop</NAME>
             <MEMO>Coffee Shop</MEMO>
           </STMTTRN>
         </BANKTRANLIST>
