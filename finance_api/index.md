@@ -1,5 +1,5 @@
 # Finance API
 
-* [TODO](TODO.md)
-    * [transforming class](transforming.md)
-* [README](README.md) 
+* [TODO](docs/TODO.md)
+    * [transforming class](docs/transforming.md)
+* [README](docs/README.md) 
