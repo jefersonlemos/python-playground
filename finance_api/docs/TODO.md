@@ -9,7 +9,6 @@
     - [x] In FastAPI/ASGI, enforce max upload size
     - [x] Tests - Enforce max upload size
     - [ ] In NGINX, enforce max upload size
-    - [ ] Tests - Probably the existing tests will be sufficient
     - [x] Read only the first few KB, never the whole file.
 
         Reject if:  
@@ -19,11 +18,11 @@
         - [ ] Set depth / size limits
     
     ### Tests
-    - [ ] Add unit tests for file upload
+    - [x] Add unit tests for file upload
     ### Fix
     - [ ] OpenSwagger UI is showing file and import as two different endpoints
 
-- [ ] **Transforming capability** -> [Details](transforming.md)
+- [x] **Transforming capability** -> [Details](transforming.md)
     - [X] Create the file transformer class to output a csv with the default [columns](transforming.md) of the MyFinance app
         - This class will receive the verified ofx file, read it and output the csv with the desired columns
         CSV output sanitization
@@ -31,7 +30,7 @@
             Prefix dangerous cells with '
             Escape formulas starting with:
                 =,+,-,@
-    - [ ] Add the class tests and ensure that they're passing
+    - [x] Add the class tests and ensure that they're passing
 
 
 
