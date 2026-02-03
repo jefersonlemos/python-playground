@@ -8,10 +8,26 @@ data_map = [
     {"id": 3, "name": "Rustina Souza Python", "email": "rusthon@cafecomvenvanse.com"}
 ]
 
-def lookup(key):
+# results = [
+#     {"id":"name"},
+#     {"name":"email"},
+#     {"email":"id"}
+# ]
+results = {
+    "id":"name",
+    "name":"email",
+    "email":"id"
+}
 
-    
-    return
+# def lookup(key):
+#     for result_item in results:
+#         print(result_item)
+
+def lookup(key):
+    for result_item in results:
+        for data_item in data_map:
+            if data_item[result_item] == key:
+                return data_item[results[result_item]]
 
 print(lookup(1))
 #Returns name
