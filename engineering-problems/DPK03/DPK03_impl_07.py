@@ -8,20 +8,12 @@ data_map = [
     {"id": 3, "name": "Rustina Souza Python", "email": "rusthon@cafecomvenvanse.com"}
 ]
 
-# results = [
-#     {"id":"name"},
-#     {"name":"email"},
-#     {"email":"id"}
-# ]
 results = {
     "id":"name",
     "name":"email",
     "email":"id"
 }
 
-# def lookup(key):
-#     for result_item in results:
-#         print(result_item)
 
 def lookup(key):
     for result_item in results:
