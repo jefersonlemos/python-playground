@@ -48,6 +48,12 @@ source .venv/bin/activate && \
 uvicorn main:app --reload --app-dir src
 ```
 
+### Running the image locally
+```
+docker build -t finance-api .
+docker run --name finance-api -p 8000:8000 finance-api:latest
+```
+
 ## Production
 
 # Endpoints
