@@ -33,7 +33,8 @@
     - [x] Add the class tests and ensure that they're passing
 
 
-
-
-
-
+- [ ] **Deployment**
+    - [ ] Create the docker image
+    - [ ] Create the docker-compose file
+    - [ ] Create a private repository
+    - [ ] Create the deploymnet manifests 
