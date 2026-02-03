@@ -34,7 +34,7 @@
 
 
 - [ ] **Deployment**
-    - [ ] Create the docker image
+    - [x] Create the Dockerfile and docker image
     - [ ] Create the docker-compose file
     - [ ] Create a private repository
     - [ ] Create the deploymnet manifests 
