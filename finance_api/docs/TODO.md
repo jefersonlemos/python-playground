@@ -36,5 +36,8 @@
 - [ ] **Deployment**
     - [x] Create the Dockerfile and docker image
     - [ ] Create the docker-compose file
-    - [ ] Create a private repository
-    - [ ] Create the deploymnet manifests 
+    - [ ] Create a private repository on ECR
+    - [ ] Setup ECR in K8s
+    - [ ] Create the deploymnet manifests
+            [x] Services and infrastructure
+            [ ] Deployment manifests

@@ -1,9 +1,11 @@
+#Namespace
+
 apiVersion: v1
 kind: Namespace
 metadata:
   name: finance-api
 ---
-
+#Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,10 +16,11 @@ spec:
   selector:
     app: finance-api
   ports:
-    - port: 80
-      targetPort: 8000
+    - port: 8000
+      targetPort: 80
 ---
 
+#GatewayClass
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
@@ -26,6 +29,7 @@ spec:
   controllerName: projectcontour.io/gateway-controller
 ---
 
+#Gateway
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
@@ -36,12 +40,13 @@ spec:
   listeners:
     - name: http
       protocol: HTTP
-      port: 80
+      port: 8000
       allowedRoutes:
         namespaces:
           from: Same
 ---
 
+#HTTPRoute
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -57,6 +62,99 @@ spec:
             value: /
       backendRefs:
         - name: finance-api-service
-          port: 80
+          port: 8000
           weight: 100
-                 
+---
+
+#ConfigMap - nginx-content
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-content
+  namespace: finance-api
+data:
+  demo.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Demo 1</title>
+    </head>
+    <body>
+        <h1>This is Demo 1</h1>
+    </body>
+    </html>
+---
+
+##ConfigMap - nginx-config
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: finance-api
+data:
+  app.conf: | 
+    server {
+        listen       80;
+        server_name  localhost;
+        
+        root   /usr/share/nginx/html;
+
+        # Create these html files in a ConfigMap and mount them
+        location = / {
+            alias   /usr/share/nginx/html;
+            index  index.html;
+            try_files /demo.html =404;
+        }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+
+    }
+---
+
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-api
+  namespace: finance-api
+spec:
+  selector:
+    matchLabels:
+      app: finance-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: finance-api
+    spec:
+      containers:
+        - name: finance-api
+          env:
+            - name: APP_NAME
+              value: "finance-api"
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/app.conf
+              subPath: app.conf
+              readOnly: true
+            - name: nginx-content
+              mountPath: /usr/share/nginx/html/demo.html
+              subPath: demo.html
+              readOnly: true
+      volumes:
+        - name: nginx-content
+          configMap:
+            name: nginx-content
+            items:
+              - key: demo.html
+                path: demo.html
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+
+
