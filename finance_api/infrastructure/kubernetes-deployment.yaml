@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: finance-api
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: finance-api-service
+  namespace: finance-api
+spec:
+  type: ClusterIP
+  selector:
+    app: finance-api
+  ports:
+    - port: 80
+      targetPort: 8000
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: contour
+spec:
+  controllerName: projectcontour.io/gateway-controller
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: finance-api-gateway
+  namespace: finance-api
+spec:
+  gatewayClassName: contour
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: finance-api-http-route
+  namespace: finance-api
+spec:
+  parentRefs:
+    - name: finance-api-gateway
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: finance-api-service
+          port: 80
+          weight: 100
+                 
