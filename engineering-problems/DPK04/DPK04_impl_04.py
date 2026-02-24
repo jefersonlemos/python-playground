@@ -1,5 +1,6 @@
 '''
-Approach: Define and Write down the approach
+Approach: A recursive function that iterates over the list and in each recursive call
+ drops the current first element(0)
 '''
 def get_language(country, data=None):
     if data is None:
