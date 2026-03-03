@@ -9,10 +9,12 @@ Italy -> Italian
 France -> French
 Germany -> German
 
-Create a function that can return the language for a given country. 
-You cannot use a hashmap or dictionary.
+Create a function that can return the language for a given country.  
+You cannot use a hashmap or dictionary.  
+---
 
-pattern_matcher("Usa") -> "English"
+`pattern_matcher("Usa") -> "English"`
+
 Refactor the code, can you do that without using IF statements?
 
-pattern_matcher("Usa") -> "English"
+`pattern_matcher("Usa") -> "English"`
