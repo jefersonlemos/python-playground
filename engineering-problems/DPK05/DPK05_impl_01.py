@@ -21,12 +21,12 @@ def get_power(name):
 
 def get_most_powerful(player1, player2):
     winner = None
+    loser = None
     draw = True
     winner_score = 10
     draw_score = 5
     loser_score = -5
     
-        
     player1_power = get_power(player1)
     player2_power = get_power(player2)
     
@@ -36,6 +36,15 @@ def get_most_powerful(player1, player2):
         draw = True
     else: 
         winner = player2
+        
+    for player in leaderboard:
+        if player == player1 or player == pla
+        if draw: 
+            
+        if player == winner:
+            #add score
+            pass
+        
 
     return
 
