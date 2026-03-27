@@ -27,7 +27,17 @@ def get_power(player, i):
 print(get_power("Paul", 0))
     
 # 2 busca mais forte
+def get_most_powerful(player1, player2):
+    power1 = get_power(player1, 0)
+    power2 = get_power(player2, 0)
 
+    if power1 is None or power2 is None:
+        return None
+
+    if power1 >= power2:
+        return player1
+
+    return player2
 
 # 3 atualiza leaderboard
 
