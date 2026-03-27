@@ -24,14 +24,12 @@ def get_power(player, i):
     return get_power(player, i+1)
     
 
-print(get_power("Paul", 0))
-    
 # 2 busca mais forte
 def get_most_powerful(player1, player2):
     power1 = get_power(player1, 0)
     power2 = get_power(player2, 0)
 
-    if power1 is None or power2 is None:
+    if power1 == power2:
         return None
 
     if power1 >= power2:
@@ -40,6 +38,20 @@ def get_most_powerful(player1, player2):
     return player2
 
 # 3 atualiza leaderboard
+def play(player1, player2):
 
+    winner = get_most_powerful(player1, player2)
+    if winner is not None:
+        loser = player2 if winner == player1 else player1
+        leaderboard[winner] += 10
+        leaderboard[loser] -= 5
+    else:
+        leaderboard[player1] += 5
+        leaderboard[player2] += 5
+    return leaderboard
+    
+
+print(play("John", "Ringo"))
+print(play("John", "George"))
 
 
