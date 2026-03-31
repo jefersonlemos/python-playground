@@ -16,28 +16,22 @@ leaderboard = {
 # 1 - search function
 
 def get_power (player, i):
-    size = len(power)
-    if i <= size:
-        if player == None:
-            return "Player None"
-        k, v = power.keys()
-        return print("power", v)
-        if player == power[player]:
-            return power.get(player)
+    power_hash_size = len(power)
+    players = list(power.keys())
+    
+    if player == None:
+        return "Player None"
+        
+    if i <= power_hash_size:
+        if player == players[i]:
+            return power[player]
     else:
         return None
 
     return get_power(player, i + 1)
 
 
-
-
-
 def play(player):
     return get_power(player,0)
-
-
-
-
 
 print(play("John"))
