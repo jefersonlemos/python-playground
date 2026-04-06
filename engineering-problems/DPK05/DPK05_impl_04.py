@@ -14,7 +14,6 @@ leaderboard = {
 
 
 # 1 - search function
-
 def get_power (player, i):
     power_hash_size = len(power)
     players = list(power.keys())
@@ -30,7 +29,6 @@ def get_power (player, i):
 
     return get_power(player, i + 1)
 
-
 # 2 - battle
 def battle (battle_players):
     players_list = list(power.keys())
@@ -44,24 +42,27 @@ def battle (battle_players):
         return "Num of Players must be 2"
     
     i = 0
-    is_match = True
     while i < len(battle_players):
-        for player in battle_players:
-            for player_from_list in players_list:
-                if player == player_from_list:
-                    i += 1
-                elif i < 1 and player != player_from_list:
-                    return f"{player} not found"
-                    next
-                elif i == 1 and player != player_from_list:
-                    i += 1
-                    return f"{player} not found"
+        player = battle_players[i]
+        if player not in players_list:
+            return f"{player} not found"
+        players_to_battle.append(player)
+        i += 1
 
-        
+    player_1 = players_to_battle[0]
+    player_2 = players_to_battle[1]
 
+    player_1_power = get_power(player_1, 0)
+    player_2_power = get_power(player_2, 0)
 
-def play(players):
-    # return get_power(player,0)
-    return battle(battle_players=players)
-
-print(play(players=["John", "Marcio"]))
+    if player_1_power > player_2_power:
+        update_leaderboard(player_1, "winner")
+        update_leaderboard(player_2, "loser")
+    elif player_2_power > player_1_power:
+        update_leaderboard(player_2, "winner")
+        update_leaderboard(player_1, "loser")
+    else:
+        update_leaderboard(player_1, "draw")
+        update_leaderboard(player_2, "draw") 
+    
+    return leaderboard
