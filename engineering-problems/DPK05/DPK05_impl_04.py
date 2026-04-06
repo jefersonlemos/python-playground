@@ -66,3 +66,19 @@ def battle (battle_players):
         update_leaderboard(player_2, "draw") 
     
     return leaderboard
+
+def update_leaderboard(player, result=None):
+    score_values = {
+        "winner": 10,
+        "loser": -5,
+        "draw": 5
+    }
+
+    if result == "draw":
+        leaderboard[player] -= score_values[result]
+    else:
+        leaderboard[player] += score_values[result]
+    
+
+
+print(battle(battle_players=["John", "Paul"]))
