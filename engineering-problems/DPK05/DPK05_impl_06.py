@@ -25,7 +25,16 @@ def get_power(player):
     return None
 
 
+def battle(players):
+    battle_result = [None] * len(players)
+    i = 0
+    for player in players:
+        battle_result[i] = (player, get_power(player))
+        i += 1
+        
+    return battle_result
 
 
 
-print(get_power("Ringo"))
+players = ["Ringo", "John"]
+print(battle(players))
