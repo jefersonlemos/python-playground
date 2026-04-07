@@ -29,3 +29,26 @@ def get_most_powerful(player1, player2):
 	if power2 > power1:
 		return player2
 	return "Draw"
+
+
+def play(player1, player2):
+	winner = get_most_powerful(player1, player2)
+
+	if winner is None:
+		return None
+
+	if winner == "Draw":
+		leaderboard[player1] += 5
+		leaderboard[player2] += 5
+		return "Draw"
+
+	loser = player2 if winner == player1 else player1
+	leaderboard[winner] += 10
+	leaderboard[loser] -= 5
+	return winner
+
+
+print(play("John", "Paul"))
+print(leaderboard)
+print(play("John", "Ringo"))
+print(leaderboard)
