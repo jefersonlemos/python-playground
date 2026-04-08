@@ -26,15 +26,31 @@ def get_power(player):
 
 
 def battle(players):
-    battle_result = [None] * len(players)
+    battle_results = [None] * len(players)
     i = 0
     for player in players:
-        battle_result[i] = (player, get_power(player))
+        battle_results[i] = (player, get_power(player))
         i += 1
+
+    i = 0
+    for i in range(2):
+        if i == 0:
+            next_player_power = battle_results[i + 1][1]
         
-    return battle_result
+        if battle_results[i][1] > next_player_power:
+            battle_results[i] = (battle_results[i][0], battle_results[i][1], "winner")
+
+        if i >= 1:
+            return battle_results
+
+        i += 1
+
+# def update_leaderboard(battle_results):
+    
+    # battle_results
+
+    # return leaderboard
 
 
-
-players = ["Ringo", "John"]
+players = ["John", "Ringo"]
 print(battle(players))
