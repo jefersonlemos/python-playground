@@ -50,14 +50,21 @@ def battle(players):
 
     return battle_results
 
-        i += 1
-
-# def update_leaderboard(battle_results):
+def update_leaderboard(player1, player2):
+    battle_results = battle([player1, player2])
     
-    # battle_results
+    score_updates = {
+        battle_results[0][0]: score_rules[battle_results[0][2]],
+        battle_results[1][0]: score_rules[battle_results[1][2]]
+    }
+    
+    for player, points in score_updates.items():
+        leaderboard[player] += points
+    
+    return battle_results
 
-    # return leaderboard
 
-
-players = ["John", "Ringo"]
-print(battle(players))
+print(update_leaderboard("John", "Paul"))
+print(update_leaderboard("John", "Ringo"))
+print(update_leaderboard("Paul", "George"))
+print(leaderboard)
