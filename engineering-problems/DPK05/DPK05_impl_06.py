@@ -36,12 +36,19 @@ def battle(players):
     for i in range(2):
         if i == 0:
             next_player_power = battle_results[i + 1][1]
+            current_power = battle_results[i][1]
+        else:
+            next_player_power = battle_results[i - 1][1]
+            current_power = battle_results[i][1]
         
-        if battle_results[i][1] > next_player_power:
+        if current_power > next_player_power:
             battle_results[i] = (battle_results[i][0], battle_results[i][1], "winner")
+        elif current_power == next_player_power:
+            battle_results[i] = (battle_results[i][0], battle_results[i][1], "draw")
+        else:
+            battle_results[i] = (battle_results[i][0], battle_results[i][1], "loser")
 
-        if i >= 1:
-            return battle_results
+    return battle_results
 
         i += 1
 
