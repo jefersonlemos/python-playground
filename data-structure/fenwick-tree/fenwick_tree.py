@@ -20,6 +20,16 @@ class FenwickTree:
             print("=========")
 
 
+    def prefix_sum(self, index):
+        total = 0
+        i = index + 1
+
+        while i > 0:
+            total += self.tree[i]
+            i -= i & -i
+
+        return total
+
 
 fenwick = FenwickTree([2, 4, 5])
 print(fenwick.tree)
