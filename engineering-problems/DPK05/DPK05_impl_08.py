@@ -18,48 +18,61 @@ score_rules = {
     "draw": 5,
 }
 
+RESULT_BY_COMPARISON = {
+    1: 0,
+    0: "draw",
+    -1: 1,
+}
+
+POINTS_BY_OUTCOME = {
+    "winner": score_rules["winner"],
+    "loser": score_rules["loser"],
+    "draw": score_rules["draw"],
+}
+
 
 def get_power(player):
     return power.get(player)
 
 
 def get_most_powerful(player1, player2):
-    player1_power = get_power(player1)
-    player2_power = get_power(player2)
+    players = (player1, player2)
+    powers = tuple(get_power(player) for player in players)
 
-    if player1_power is None or player2_power is None:
+    if None in powers:
         return None
 
-    result_by_comparison = {
-        1: player1,
-        0: "draw",
-        -1: player2,
-    }
+    comparison = (powers[0] > powers[1]) - (powers[0] < powers[1])
+    winner_index = RESULT_BY_COMPARISON[comparison]
 
-    comparison = (player1_power > player2_power) - (player1_power < player2_power)
-    return result_by_comparison[comparison]
+    if winner_index == "draw":
+        return "draw"
+
+    return players[winner_index]
+
+
+def add_score(player, outcome):
+    leaderboard[player] += POINTS_BY_OUTCOME[outcome]
+
+
+def update_leaderboard(players, winner):
+    if winner == "draw":
+        outcomes = ("draw", "draw")
+    else:
+        outcomes = ("winner", "loser") if players[0] == winner else ("loser", "winner")
+
+    for player, outcome in zip(players, outcomes):
+        add_score(player, outcome)
 
 
 def play(player1, player2):
+    players = (player1, player2)
     winner = get_most_powerful(player1, player2)
 
     if winner is None:
         return None
 
-    score_updates = {
-        player1: score_rules["draw"],
-        player2: score_rules["draw"],
-    }
-
-    if winner != "draw":
-        loser = player2 if winner == player1 else player1
-        score_updates = {
-            winner: score_rules["winner"],
-            loser: score_rules["loser"],
-        }
-
-    for player, points in score_updates.items():
-        leaderboard[player] += points
+    update_leaderboard(players, winner)
 
     return winner
 
