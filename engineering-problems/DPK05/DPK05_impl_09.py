@@ -24,6 +24,12 @@ RESULT_BY_COMPARISON = {
     -1: "player2",
 }
 
+SCORE_BY_RESULT = {
+    "winner": score_rules["winner"],
+    "loser": score_rules["loser"],
+    "draw": score_rules["draw"],
+}
+
 def get_power(player):
     return power.get(player)
 
@@ -47,4 +53,22 @@ def get_most_powerful(player1, player2):
     return winners_by_result[result]
 
 
-print(get_most_powerful("John","Paul"))
+def play(player1, player2):
+    winner = get_most_powerful(player1, player2)
+
+    if winner is None:
+        return None
+
+    score_updates_by_winner = {
+        player1: [(player1, "winner"), (player2, "loser")],
+        player2: [(player2, "winner"), (player1, "loser")],
+        "draw": [(player1, "draw"), (player2, "draw")],
+    }
+
+    for player, result in score_updates_by_winner[winner]:
+        leaderboard[player] += SCORE_BY_RESULT[result]
+
+    return winner
+
+print(play("John","Paul"))
+print(leaderboard)
