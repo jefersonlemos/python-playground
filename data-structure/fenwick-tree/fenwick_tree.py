@@ -30,6 +30,15 @@ class FenwickTree:
 
         return total
 
+    def range_sum(self, left, right):
+        if left > right:
+            return 0
+
+        if left == 0:
+            return self.prefix_sum(right)
+
+        return self.prefix_sum(right) - self.prefix_sum(left - 1)
+
 
 fenwick = FenwickTree([2, 4, 5])
 print(fenwick.tree)
