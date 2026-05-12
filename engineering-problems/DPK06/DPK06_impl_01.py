@@ -5,8 +5,11 @@ def tokenize(input, separator):
     for char in input:
         if char != separator:
             token += char
+            print(token)
+            #TODO - Gotta find a way to add the last item because 
+            # there's no more separator to go to the else statement
         else:
-            tokenized_input += token
+            tokenized_input.append(token)
             token = ""
     return tokenized_input
 
