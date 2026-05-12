@@ -14,14 +14,21 @@ def tokenize(input, separator):
                 print("input[input-index]: ",input[input_index])
                 found_separator = False
                 break
+
+        if found_separator:
             tokenized_input.append(token)
             token = ""
+            index += len(separator)
+        else:
+            # Each character is added to the token variable until it's complete
+            token += input[index]
+            index += 1
+
+    tokenized_input.append(token)
     return tokenized_input
 
-    # for each separator
-    #     replace with comma
-    #     append to the tokenized_input list
-    
 
+if __name__ == "__main__":
+    print(tokenize("a,b,c,d", ","))
 
 print(tokenize("My god, this is awesome.", ","))
