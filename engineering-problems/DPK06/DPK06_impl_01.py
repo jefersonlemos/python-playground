@@ -1,14 +1,19 @@
 def tokenize(input, separator):
     tokenized_input = []
     token = ""
+    index = 0
 
-    for char in input:
-        if char != separator:
-            token += char
-            print(token)
-            #TODO - Gotta find a way to add the last item because 
-            # there's no more separator to go to the else statement
-        else:
+    while index < len(input):
+        found_separator = True
+
+        for separator_index in range(len(separator)):
+            input_index = index + separator_index
+
+            if input_index >= len(input) or input[input_index] != separator[separator_index]:
+                print("len-input: ", len(input))
+                print("input[input-index]: ",input[input_index])
+                found_separator = False
+                break
             tokenized_input.append(token)
             token = ""
     return tokenized_input
