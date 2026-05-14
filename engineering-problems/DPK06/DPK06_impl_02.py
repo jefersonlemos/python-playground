@@ -16,3 +16,21 @@ def tokenize(input, separator):
     tokens = []
     current_token = ""
     index = 0
+
+    while index < len(input):
+        if is_separator_at(input, separator, index):
+            tokens.append(current_token)
+            current_token = ""
+            index += len(separator)
+        else:
+            current_token += input[index]
+            index += 1
+
+    tokens.append(current_token)
+    return tokens
+
+
+if __name__ == "__main__":
+    print(tokenize("Hello,World,How,Are,You", ","))
+    print(tokenize("Hello World How Are You", " "))
+    print(tokenize("Hello-World-How-Are-You", "-"))
