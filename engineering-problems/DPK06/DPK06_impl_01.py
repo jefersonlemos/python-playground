@@ -1,4 +1,7 @@
 def tokenize(input, separator):
+    if separator == "":
+        raise ValueError("separator cannot be empty")
+
     tokenized_input = []
     token = ""
     index = 0
@@ -12,10 +15,12 @@ def tokenize(input, separator):
             if input_index >= len(input) or input[input_index] != separator[separator_index]:
                 print("len-input: ", len(input))
                 print("input[input-index]: ",input[input_index])
+                # When it's a character
                 found_separator = False
                 break
 
         if found_separator:
+            # When the first word is fully collected, it's added to the list
             tokenized_input.append(token)
             token = ""
             index += len(separator)
@@ -30,5 +35,3 @@ def tokenize(input, separator):
 
 if __name__ == "__main__":
     print(tokenize("a,b,c,d", ","))
-
-print(tokenize("My god, this is awesome.", ","))
