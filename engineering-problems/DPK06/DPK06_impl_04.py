@@ -13,3 +13,15 @@ def is_separator(input, separator, index):
 
     return True
 
+def collect_next_token(input, separator, start_index):
+    token = ""
+    index = start_index
+
+    while index < len(input):
+        if is_separator(input, separator, index):
+            return token, index + len(separator), True
+
+        token += input[index]
+        index += 1
+
+    return token, index, False
