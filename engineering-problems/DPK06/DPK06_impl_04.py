@@ -25,3 +25,28 @@ def collect_next_token(input, separator, start_index):
         index += 1
 
     return token, index, False
+
+def tokenize(input, separator):
+    if separator == "":
+        raise ValueError("separator cannot be empty")
+
+    tokens = []
+    index = 0
+
+    while True:
+        token, index, found_separator = collect_next_token(input, separator, index)
+        tokens.append(token)
+
+        if not found_separator:
+            break
+        if index == len(input):
+            tokens.append("")
+            break
+
+    return tokens
+
+
+if __name__ == "__main__":
+    print(tokenize("Hello,World,How,Are,You", ","))
+    print(tokenize("Hello World How Are You", " "))
+    print(tokenize("Hello-World-How-Are-You", "-"))
