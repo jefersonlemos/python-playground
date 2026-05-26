@@ -11,6 +11,16 @@ def buffer_ends_with_separator(buffer, separator):
 
     return True
 
+
+def buffer_to_string(buffer, end_index):
+    text = ""
+    index = 0
+
+    while index < end_index:
+        text += buffer[index]
+        index += 1
+
+
 if __name__ == "__main__":
     print(tokenize("Hello,World,How,Are,You", ","))
     print(tokenize("Hello World How Are You", " "))
