@@ -18,10 +18,6 @@ def _group_items(items, group_size):
     return grouped_items
 
 
-def group(items, size):
-    return _group_items(items, size)
-
-
 def group_by(items, size):
     return _group_items(items, size)
 
